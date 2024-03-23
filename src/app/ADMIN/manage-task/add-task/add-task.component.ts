@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SharingService } from '../../../CORE/services/sharing.service';
 import { ITask } from '../../../CORE/models/task.interface';
 import { LocalStorageService } from '../../../CORE/services/localStorage.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'add-task',
@@ -16,7 +17,6 @@ export class AddTaskComponent implements OnInit{
   public checkoutForm: any;
   private isLocalStorageAvailable = typeof localStorage !== 'undefined';
   tasks: ITask[] = [];
-
   constructor(
     private formBuilder: FormBuilder,
     private sharingService: SharingService,
@@ -27,7 +27,6 @@ export class AddTaskComponent implements OnInit{
       description: '',
       status: false,
     });
-    
   }
   ngOnInit(): void {
     if(this.isLocalStorageAvailable) {
@@ -40,17 +39,25 @@ export class AddTaskComponent implements OnInit{
       }
     }
   }
+
   onSubmit(value: ITask) {
     if (this.checkoutForm.valid) {
+      //var arrTasks = this.localtStorageService.getDataLocal('Tasks') 
+      //this.tasks = JSON.parse(arrTasks);
+      let dataUpdate:ITask[]=[];
+      this.sharingService.arrSharingObservable.subscribe((t)=>{this.tasks = t})
+
       if(this.tasks.findIndex((e)=>e.title === value.title)  !== -1){
         alert('This task already exists');
       }else{
         value.id = this.tasks.length + 1;
         this.tasks.push(value);
-        this.sharingService.arrSharingObservableData=this.tasks;
+        console.log(this.sharingService.arrSharingObservable.subscribe(e=>console.log(e)));
+        this.sharingService.arrSharingObservableData = this.tasks;
         this.sharingService.alertBSData=true;
         this.localtStorageService.setDataLocal('Tasks', JSON.stringify(this.tasks));
       }
+      
     } else {
       console.log('Faltan campos por llenar');
     }

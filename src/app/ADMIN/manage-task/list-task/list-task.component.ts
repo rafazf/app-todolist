@@ -40,6 +40,7 @@ export class ListTaskComponent {
       'Tasks',
       JSON.stringify(this.newData)
     );
+    console.log('nueva data: ',this.newData);
     this.sharingService.arrSharingObservableData = this.newData;
   }
 

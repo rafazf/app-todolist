@@ -10,7 +10,7 @@ export class LocalStorageService {
   constructor() {this.prefix = '' }
 
   getDataLocal(key:string){
-    return localStorage.getItem(this.prefix + key);
+    return localStorage.getItem(this.prefix + key) || '[]';
   }
 
   setDataLocal(key:string, data:string){
