@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    background-color: #374550;
+}
+.border-gradient{
+    border:1px solid transparent;
+    background: padding-box linear-gradient(#425059, #374550),
+  border-box linear-gradient(rgb(255 255 255), rgb(255 255 255 / 0.1));
+}

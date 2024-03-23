@@ -1,0 +1,16 @@
+<div class="p-2">
+    <navbar></navbar>
+</div>
+
+<div class="text-white p-2 text-center">
+    <h1>Hola</h1>
+    <p>Organiza tus actividades en un solo lugar</p>
+</div>
+
+<div class="text-white flex flex-col gap-2 p-2 mt-3">
+   <div class="text-white flex flex-col md:flex-row gap-2 p-2 mt-2">
+    <add-task class="flex-1"/>
+    <list-task [showTasksDone]="true" class="flex-1"/>
+   </div>
+   <list-task [showTasksDone]="false"/>
+</div>

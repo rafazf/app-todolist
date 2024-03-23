@@ -1,0 +1,13 @@
+//generalmente son servicios que solo tendrá un unica instancia en nuestra aplicación
+//la información va hacer obtenida de un mismo lugar
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { SharingService } from "./services/sharing.service";
+
+@NgModule({
+    imports:[CommonModule],
+    providers:[SharingService]
+})
+export class CoreModule {
+
+}
