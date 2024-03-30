@@ -14,9 +14,8 @@ export class NavbarComponent implements OnInit{
   alertColor;
   nTasks=0;
   nTCompleted=0;
-  cdr = inject(ChangeDetectorRef);
 
-  constructor(private sharingService: SharingService) {
+  constructor(private sharingService: SharingService, private cdr:ChangeDetectorRef) {
     this.alertColor = sharingService.alertBS;
     this.sharingService.alertBS.subscribe((value) => {
       if (value === true) {
