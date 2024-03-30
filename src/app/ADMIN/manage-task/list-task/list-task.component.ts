@@ -27,7 +27,8 @@ export class ListTaskComponent {
     this.data$ = this.sharingService.arrSharingObservable;
     this.formEditTask = this._fb.group({
       title:['',Validators.required],
-      description:['',Validators.required]  
+      description:['',Validators.required],
+      id:0
     })
   }
   removeTask(e: Event) {
@@ -36,12 +37,11 @@ export class ListTaskComponent {
     this.newData = this.newData.filter((el) => {
       return el.id !== Number(element.id);
     });
+    this.sharingService.arrSharingObservableData = this.newData;
     this.localStorageService.setDataLocal(
       'Tasks',
       JSON.stringify(this.newData)
     );
-    console.log('nueva data: ',this.newData);
-    this.sharingService.arrSharingObservableData = this.newData;
   }
 
   changeTaskStatus(e: Event) {
@@ -63,12 +63,21 @@ export class ListTaskComponent {
     this.newData = this.newData.filter((item)=>item.id === Number(element.id) ? {...item}:'')
     this.formEditTask.controls.title.setValue(this.newData[0].title);
     this.formEditTask.controls.description.setValue(this.newData[0].description);
+    this.formEditTask.controls.id.setValue(this.newData[0].id);
     this.closeModalEditing();    
   }
 
   saveEditTask(){
     if(this.formEditTask.valid){
-      alert('enviando los datos')
+      let dataUpdate:ITask[] = JSON.parse(this.localStorageService.getDataLocal('Tasks') || '[]');
+      dataUpdate.map((item)=>{
+        if(item.id === this.formEditTask.value.id){
+          item.title= this.formEditTask.value.title!;
+          item.description= this.formEditTask.value.description!;          
+        }
+      })
+      this.localStorageService.setDataLocal("Tasks",JSON.stringify(dataUpdate));
+      this.sharingService.arrSharingObservableData = dataUpdate;
     }else{
       alert('Faltan datos por llenar')
     }

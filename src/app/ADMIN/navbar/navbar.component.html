@@ -1,4 +1,13 @@
-<div [ngClass]="{'shadow-md shadow-orange-300/50':alertColor | async}" class="shadow-md shadow-pink-500/20 text-white nav flex justify-end border-gray-400 border mt-2 p-2 rounded-xl">
+<div [ngClass]="{'shadow-md shadow-orange-300/50':alertColor | async}" class="shadow-md shadow-pink-500/20 text-white nav flex justify-between border-gray-400 border mt-2 p-2 rounded-xl">
+    <div>
+        <span>Task(s)  {{nTCompleted}} / {{nTasks}} 
+            @if (nTCompleted === nTasks) {
+                <span class="bg-green-100 text-green-500 px-2 py-1 rounded-lg">Well done</span>
+            }@else {
+                <span class="bg-orange-100 text-orange-500 px-2 py-1 rounded-lg">To do</span>
+            }
+        </span>
+    </div>
     <div class="alert">
         <span [ngClass]="{'bg-white':(alertColor | async)}" class=" p-2 rounded-lg">🔔</span>
     </div>

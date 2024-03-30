@@ -42,22 +42,16 @@ export class AddTaskComponent implements OnInit{
 
   onSubmit(value: ITask) {
     if (this.checkoutForm.valid) {
-      //var arrTasks = this.localtStorageService.getDataLocal('Tasks') 
-      //this.tasks = JSON.parse(arrTasks);
-      let dataUpdate:ITask[]=[];
       this.sharingService.arrSharingObservable.subscribe((t)=>{this.tasks = t})
-
       if(this.tasks.findIndex((e)=>e.title === value.title)  !== -1){
         alert('This task already exists');
       }else{
-        value.id = this.tasks.length + 1;
+        value.id = this.tasks.length === 0 ? 1 : this.tasks[this.tasks.length - 1].id + 1;
         this.tasks.push(value);
-        console.log(this.sharingService.arrSharingObservable.subscribe(e=>console.log(e)));
         this.sharingService.arrSharingObservableData = this.tasks;
         this.sharingService.alertBSData=true;
         this.localtStorageService.setDataLocal('Tasks', JSON.stringify(this.tasks));
       }
-      
     } else {
       console.log('Faltan campos por llenar');
     }
