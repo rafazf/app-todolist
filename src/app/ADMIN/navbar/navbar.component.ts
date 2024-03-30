@@ -10,12 +10,12 @@ import { ChangeDetectorRef } from '@angular/core';
   templateUrl: './navbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent{
   alertColor;
   nTasks=0;
   nTCompleted=0;
 
-  constructor(private sharingService: SharingService, private cdr:ChangeDetectorRef) {
+  constructor(private sharingService: SharingService) {
     this.alertColor = sharingService.alertBS;
     this.sharingService.alertBS.subscribe((value) => {
       if (value === true) {
@@ -26,17 +26,17 @@ export class NavbarComponent implements OnInit{
     });   
   }
   
-  ngOnInit(): void {
-    this.sharingService.arrSharingObservable.subscribe((data: Array<ITask>) =>{
-      this.nTasks = data.length;
-    })
-    this.sharingService.arrSharingObservable.subscribe({
-      next:(data:Array<ITask>)=>
-      {
-        this.nTCompleted = data.filter((t : ITask) => t.status === true).length;
-        this.cdr.detectChanges()
-      },
-    })
+  // ngOnInit(): void {
+  //   this.sharingService.arrSharingObservable.subscribe((data: Array<ITask>) =>{
+  //     this.nTasks = data.length;
+  //   })
+  //   this.sharingService.arrSharingObservable.subscribe({
+  //     next:(data:Array<ITask>)=>
+  //     {
+  //       this.nTCompleted = data.filter((t : ITask) => t.status === true).length;
+  //       this.cdr.detectChanges()
+  //     },
+  //   })
     
-  }
+  // }
 }
